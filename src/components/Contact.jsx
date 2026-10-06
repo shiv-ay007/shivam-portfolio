@@ -7,6 +7,7 @@ export default function Contact() {
   const [open, setOpen] = useState(false)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
   const [message, setMessage] = useState('')
   const [status, setStatus] = useState('idle') // idle | sending | success | error
   const [toast, setToast] = useState({ show: false, message: '' })
@@ -52,12 +53,13 @@ export default function Contact() {
           Accept: 'application/json',
         },
         body: JSON.stringify({
-          access_key: import.meta.env.VITE_WEB3FORMS_KEY,
+          access_key: import.meta.env.VITE_WEB3FORMS_KEY || '2c4714a2-8e3d-4f3f-8a9e-1db34af82284',
           name: name || 'A visitor',
           email: email || 'no-reply@example.com',
+          phone: phone || 'Not provided',
           message,
-          subject: `A letter from ${name || 'a visitor'}`,
-          from_name: 'Portfolio Contact Form',
+          subject: `A message from ${name || 'a visitor'} (${phone || 'No phone'})`,
+          from_name: 'Shivam Yadav Portfolio Contact Form',
         }),
       })
 
@@ -68,6 +70,7 @@ export default function Contact() {
         setToast({ show: true, message: 'Sent with love 💌✨' })
         setName('')
         setEmail('')
+        setPhone('')
         setMessage('')
         setTimeout(() => {
           handleClose()
@@ -240,6 +243,15 @@ export default function Contact() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="your email"
+              required
+              className="w-full bg-transparent border-none border-b border-dashed border-ink/30 mt-3 pb-1 font-hand text-lg placeholder:text-ink/40 focus:outline-none"
+            />
+
+            <input
+              type="tel"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="your contact number"
               required
               className="w-full bg-transparent border-none border-b border-dashed border-ink/30 mt-3 pb-1 font-hand text-lg placeholder:text-ink/40 focus:outline-none"
             />
